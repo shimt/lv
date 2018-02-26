@@ -1,12 +1,12 @@
 Name:		lv
-Version:	4.51.2.2.01
+Version:	4.51.4.00
 Release:	1%{?dist}
 Summary:	lv - a Powerful Multilingual File Viewer / Grep
 
 Group:		Applications/Text
 License:	GPLv2
 URL:		https://github.com/shimt/lv/
-Source0:	https://github.com/shimt/lv/archive/4.51.2.2.01.tar.gz
+Source0:	https://github.com/shimt/lv/archive/4.51.4.00.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	ncurses-devel
@@ -37,7 +37,7 @@ Requires:	ncurses
  lv is a completely original software including no code drawn from less and grep and other programs at all. 
 
 %prep
-%setup -q -n lv-4.51.2.2.00
+%setup -q -n lv-4.51.4.00
 
 
 %build

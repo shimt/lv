@@ -4,3 +4,4 @@ misc.diff
 20051030_%src%_~use_off_t.diff
 bts.660358.diff
 fix-hyphen-used-as-minus-sign.diff
+sigvec.patch
