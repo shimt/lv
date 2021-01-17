@@ -5,3 +5,10 @@ misc.diff
 bts.660358.diff
 fix-hyphen-used-as-minus-sign.diff
 sigvec.patch
+support-zstd-automatic-decompression.patch
+change-maximum-height-to-144.patch
+fix_implicit_decls.diff
+no_inline.diff
+man_typos.diff
+makefile.diff
+shows-the-filename-only.diff

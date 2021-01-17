@@ -3,10 +3,11 @@ Description: Improve large file processing performance over typically +40% to
 Author: GOTO Masanori <gotom@debian.org>
 Last-Update: 2005-05-06
 
-diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c lv451.gotom/src/command.c
---- lv451/src/command.c	2004-01-05 16:42:31.000000000 +0900
-+++ lv451.gotom/src/command.c	2005-05-06 21:27:02.000000000 +0900
-@@ -497,7 +497,7 @@ private void CommandReload( unsigned int
+Index: lv/src/command.c
+===================================================================
+--- lv.orig/src/command.c
++++ lv/src/command.c
+@@ -512,7 +512,7 @@ private void CommandReload( unsigned int
    byte defaultCodingSystem;
    stream_t st;
  
@@ -15,7 +16,7 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
      label = "cannot reload non-regular files";
      return;
    }
-@@ -506,9 +506,9 @@ private void CommandReload( unsigned int
+@@ -521,9 +521,9 @@ private void CommandReload( unsigned int
      label = "cannot reload current file";
      return;
    } else {
@@ -27,7 +28,7 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
      st.pid = f->pid;
    }
  
-@@ -618,7 +618,7 @@ private void CommandEdit( unsigned int a
+@@ -633,7 +633,7 @@ private void CommandEdit( unsigned int a
    byte *fileName;
    int lineNumber;
  
@@ -36,7 +37,7 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
      label = "cannot edit non-regular files";
      return;
    }
-@@ -698,7 +698,7 @@ private void CommandPoll( unsigned int a
+@@ -713,7 +713,7 @@ private void CommandPoll( unsigned int a
  
    kb_interrupted = FALSE;
  
@@ -45,7 +46,7 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
      label = "cannot poll non-regular files";
      return;
    }
-@@ -718,8 +718,8 @@ private void CommandPoll( unsigned int a
+@@ -733,8 +733,8 @@ private void CommandPoll( unsigned int a
      ConsoleSetAttribute( 0 );
      ConsoleFlush();
  
@@ -56,7 +57,7 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
  
      ConsoleEnableInterrupt();
  
-@@ -728,8 +728,8 @@ private void CommandPoll( unsigned int a
+@@ -743,8 +743,8 @@ private void CommandPoll( unsigned int a
        if( kb_interrupted )
  	break;
  
@@ -67,9 +68,10 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/command.c l
  	// it grew
  	break;
        }
-diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/configure.in lv451.gotom/src/configure.in
---- lv451/src/configure.in	2004-01-05 15:35:44.000000000 +0900
-+++ lv451.gotom/src/configure.in	2005-05-06 21:28:07.000000000 +0900
+Index: lv/src/configure.in
+===================================================================
+--- lv.orig/src/configure.in
++++ lv/src/configure.in
 @@ -57,5 +57,16 @@ AC_DEFUN([AM_LANGINFO_CODESET],
  
  AM_LANGINFO_CODESET
@@ -87,9 +89,10 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/configure.i
 +
  dnl AC_OUTPUT(Makefile src/Makefile)
  AC_OUTPUT(Makefile)
-diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/fetch.c lv451.gotom/src/fetch.c
---- lv451/src/fetch.c	2004-01-05 16:30:15.000000000 +0900
-+++ lv451.gotom/src/fetch.c	2005-05-06 20:03:44.000000000 +0900
+Index: lv/src/fetch.c
+===================================================================
+--- lv.orig/src/fetch.c
++++ lv/src/fetch.c
 @@ -151,7 +151,7 @@ private void PageLoad( file_t *f, int bl
  {
    int i;
@@ -99,9 +102,10 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/fetch.c lv4
      perror( "PageLoad()" ), exit( -1 );
  
    f->eof = FALSE;
-diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/file.c lv451.gotom/src/file.c
---- lv451/src/file.c	2004-01-05 16:30:15.000000000 +0900
-+++ lv451.gotom/src/file.c	2005-05-06 21:36:20.000000000 +0900
+Index: lv/src/file.c
+===================================================================
+--- lv.orig/src/file.c
++++ lv/src/file.c
 @@ -68,6 +68,57 @@ public void FileFreeLine( file_t *f )
    }
  }
@@ -279,9 +283,10 @@ diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/file.c lv45
    f->pid		= st->pid;
    f->lastSegment	= 0;
    f->totalLines		= 0L;
-diff -Nuarp -x Makefile -x 'gmon*' -x 'profile*' -x 'lv-*' lv451/src/file.h lv451.gotom/src/file.h
---- lv451/src/file.h	2004-01-05 16:30:15.000000000 +0900
-+++ lv451.gotom/src/file.h	2005-05-06 21:34:53.000000000 +0900
+Index: lv/src/file.h
+===================================================================
+--- lv.orig/src/file.h
++++ lv/src/file.h
 @@ -27,6 +27,10 @@
  #define FRAME_SIZE	4096U
  #endif /* MSDOS */

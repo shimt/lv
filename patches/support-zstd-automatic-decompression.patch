@@ -1,0 +1,26 @@
+Description: support zstd automatic decompression
+Author: YAMADA Tsuyoshi <tyamada@minimum2scp.org>
+Last-Update: 2019-06-13
+Bug-Debian: https://bugs.debian.org/930478
+
+Index: lv/src/stream.c
+===================================================================
+--- lv.orig/src/stream.c
++++ lv/src/stream.c
+@@ -45,6 +45,7 @@ private byte *gz_filter = "zcat";
+ private byte *bz2_filter = "bzcat";
+ private byte *lzma_filter = "lzcat";
+ private byte *xz_filter = "xzcat";
++private byte *zstd_filter = "zstdcat";
+ 
+ private stream_t *StreamAlloc()
+ {
+@@ -81,6 +82,8 @@ public stream_t *StreamOpen( byte *file
+       filter = lzma_filter;
+     else if ( !strcmp( "xz", exts ) )
+       filter = xz_filter;
++    else if ( !strcmp( "zst", exts ) )
++      filter = zstd_filter;
+   }
+   if( NULL != filter ){
+     /*

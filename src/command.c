@@ -1173,8 +1173,15 @@ public void Command( file_t *file, byte **optional )
 	else
 	  label = "(END)";
       }
-      if( TRUE == f->top )
+      if( TRUE == f->top ){
 	label = FileName( f );
+        /* if the file name is not shorter than the width of the screen,
+         * it causes scrolling and moves the first line of the file
+         * out of the screen
+         */
+        if ( strlen(label) >= f->width )
+          label = NULL;
+      }
     }
 
     if( NULL != label ){
